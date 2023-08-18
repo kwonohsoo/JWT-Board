@@ -51,13 +51,14 @@ public class JwtProvider {
 
     // AccessToken CREATE
     public String accessToken(Member member) {
-        List<String> roles = member.getAuthorities()
+        List<String> roles = member.customUserDetails()
+                .getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
         Map<String, Object> map = new HashMap<>();
-        map.put("headerAccessToken", headerAccessToken);
+        map.put("headerAccessToken", "Bearer"); // 예시: Bearer
 
         return Jwts.builder()
                 .setHeader(map)

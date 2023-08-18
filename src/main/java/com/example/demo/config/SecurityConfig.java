@@ -12,7 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity // Spring MVC & Spring Security 통합   // @EnableWebMvcSecurity (Spring Security 4.0부터 사용 X)
 @RequiredArgsConstructor
 public class SecurityConfig {
 

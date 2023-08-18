@@ -7,6 +7,8 @@ import com.example.demo.entity.Member;
 import com.example.demo.jwt.JwtProvider;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.service.MemberService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +25,7 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api")
+@Api(tags = "회원 관리")
 public class MemberController {
 
     private final Logger logger = LoggerFactory.getLogger(MemberController.class);
@@ -34,6 +37,7 @@ public class MemberController {
 
     // 회원가입
     @PostMapping("/join")
+    @ApiOperation(value = "회웝 가입 API", notes = "새로운 회원 등록")
     public ResponseEntity<SignUpDto> join(@Valid @RequestBody SignUpDto signUpDto) {
         try {
             SignUpDto join = memberService.signUp(signUpDto);
@@ -47,6 +51,7 @@ public class MemberController {
 
     // 로그인
     @PostMapping("/login")
+    @ApiOperation(value = "로그인 API", notes = "회원 로그인을 수행하고 AccessToken 반환")
     public ResponseEntity<TokenDto> login(@Valid @RequestBody LoginDto loginDto) {
         try {
             TokenDto tokens = memberService.login(loginDto);
@@ -61,6 +66,7 @@ public class MemberController {
 
     // accessToken 갱신
     @PostMapping("/refresh")
+    @ApiOperation(value = "RefreshToken API", notes = "RefreshToken으로 AccssToken 갱신")
     public ResponseEntity<TokenDto> refreshAccessToken(@RequestBody TokenDto tokenDto) {
         String refreshToken = tokenDto.getRefreshToken();
 
