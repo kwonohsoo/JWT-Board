@@ -11,19 +11,19 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
 @Configuration
-//@EnableSwagge
 public class SwaggerConfig {
 
-//    @Bean
-//    public Docket api(){
-//        return new Docket(DocumentationType.SWAGGER_2)
-//                .apiInfo(apiInfo())
-//                .select() // API 문서에 포함할 API들을 선택하기 위한 설정 시작
-////                .apis(RequestHandlerSelectors.any()) // 모든 컨트롤러를 문서에 포함
-//                .apis(RequestHandlerSelectors.basePackage("com.example.demo"))
-//                .paths(PathSelectors.any()) // 모든 엔드포인트를 문서에 포함
-//                .build();
-//    }
+    @Bean
+    public Docket board() {
+        return new Docket(DocumentationType.OAS_30)
+                .useDefaultResponseMessages(false)
+                .groupName("게시판")
+                .apiInfo(this.apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.example.demo"))
+                .paths(PathSelectors.any())
+                .build();
+    }
 
     @Bean
     public Docket login() {
@@ -32,19 +32,17 @@ public class SwaggerConfig {
                 .groupName("로그인")
                 .apiInfo(this.apiInfo())
                 .select()
-//                .apis(RequestHandlerSelectors.any())
                 .apis(RequestHandlerSelectors.basePackage("com.example.demo"))
-//                .paths(PathSelectors.ant("/login/**"))
                 .paths(PathSelectors.any())
                 .build();
     }
 
-    private ApiInfo apiInfo(){
+    private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Toy-Project")
                 .description("Account, Login, Board")
                 .version("1.0.0")
-                .contact(new Contact("권오수","localhost:8080", "kwon524@bns.co.kr"))
+                .contact(new Contact("권오수", "https://github.com/kwonohsoo", "kwon524@bns.co.kr"))
                 .build();
     }
 }

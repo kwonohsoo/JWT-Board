@@ -10,8 +10,7 @@ import com.example.demo.service.MemberService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,18 +21,16 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.NoSuchElementException;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api")
 @Api(tags = "회원 관리")
 public class MemberController {
 
-    private final Logger logger = LoggerFactory.getLogger(MemberController.class);
-
     private final MemberService memberService;
     private final MemberRepository memberRepository;
     private final JwtProvider jwtProvider;
-
 
     // 회원가입
     @PostMapping("/join")
@@ -44,7 +41,7 @@ public class MemberController {
             System.out.println("회원가입 : " + join);
             return ResponseEntity.ok(signUpDto);
         } catch (Exception e) {
-            logger.debug(e.getMessage());
+            log.debug(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500 error
         }
     }
@@ -59,7 +56,7 @@ public class MemberController {
             System.out.println("토큰 : " + tokens);
             return ResponseEntity.ok(tokens);
         } catch (Exception e) {
-            logger.debug(e.getMessage());
+            log.debug(e.getMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
@@ -83,13 +80,11 @@ public class MemberController {
 
             return ResponseEntity.ok(new TokenDto(newAccessToken, refreshToken));
         } catch (NoSuchElementException e) {
-            logger.debug("사용자를 찾을 수 없습니다.: " + e.getMessage());
+            log.debug("사용자를 찾을 수 없습니다.: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         } catch (Exception e) {
-            logger.debug("Refresh Token 유효성 검사 실패: " + e.getMessage());
+            log.debug("Refresh Token 유효성 검사 실패: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
-
-
 }

@@ -5,16 +5,19 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Comment;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "member")
 public class Member extends BaseTimeEntity {
 
     @Id
-    @Column(name = "sno")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Comment("회원 번호")
     private Long sno;
@@ -42,8 +45,29 @@ public class Member extends BaseTimeEntity {
     @Comment("사용 여부 - 사용: 0 삭제: 9")
     private int useYn;
 
+    @OneToMany(mappedBy = "member")
+    private List<Board> boardList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Reply> replyList = new ArrayList<>();
+
     // spring security UserDetails
     public CustomUserDetails customUserDetails() {
         return new CustomUserDetails(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "sno=" + sno +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", role=" + role +
+                ", useYn=" + useYn +
+                ", boardList=" + boardList +
+                ", replyList=" + replyList +
+                '}';
     }
 }

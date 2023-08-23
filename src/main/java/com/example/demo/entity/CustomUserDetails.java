@@ -10,6 +10,7 @@ import java.util.Collection;
 
 @RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
+
     private final Member member;
 
     @Override

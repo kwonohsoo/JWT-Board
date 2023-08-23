@@ -10,7 +10,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         show_sql: true
@@ -19,11 +19,6 @@ spring:
         connection:
           charSet: UTF-8
     database-platform: org.hibernate.dialect.MariaDB10Dialect
-
-  # SWAGGER
-  #  mvc:
-  #    pathmatch:
-  #      matching-strategy: ant_path_matcher
 
   jackson:
     property-naming-strategy: SNAKE_CASE
