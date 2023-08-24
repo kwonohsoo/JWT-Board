@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReplyService {
 
-    private  final ReplyQueryRepository replyQueryRepository;
+    private final ReplyQueryRepository replyQueryRepository;
 
 
     // 댓글 작성
@@ -30,6 +30,10 @@ public class ReplyService {
         return replyQueryRepository.findRepliesByBoard(board);
     }
 
+    // 댓글 수정
+    public void updateReply(Long rno, ReplyDto replyDto) {
+        replyQueryRepository.updateReply(rno, replyDto);
+    }
 
 
 }

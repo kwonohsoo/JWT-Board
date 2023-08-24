@@ -48,4 +48,18 @@ public class ReplyController {
         List<Reply> replies = replyService.findRepliesByBoard(board);
         return ResponseEntity.ok(replies);
     }
+
+    // 댓글 수정
+    @PutMapping("/update/{rno}")
+    @ApiOperation(value = "댓글 수정 API", notes = "댓글 수정")
+    public ResponseEntity<String> updateReply(@PathVariable Long rno, @RequestBody ReplyDto replyDto) {
+        try {
+            replyService.updateReply(rno, replyDto);
+            return ResponseEntity.ok("댓글이 성공적으로 수정되었습니다. ");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("댓글 수정 중 요류가 발생하였습니다.");
+        }
+    }
+
+
 }
