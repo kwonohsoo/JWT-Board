@@ -2,7 +2,10 @@ package com.example.demo.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 
@@ -44,4 +47,5 @@ public class BoardDto {
     public void setContent(String content) {
         this.content = content;
     }
+
 }

@@ -12,8 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.util.List;
 
-import static com.example.demo.entity.QReply.reply;
-
 @RequiredArgsConstructor
 @Repository
 @Transactional(readOnly = true)
@@ -34,7 +32,6 @@ public class ReplyQueryRepository {
     // 댓글 목록 조회
     public List<Reply> findRepliesByBoard(Board board) {
         QReply reply = QReply.reply;
-
         return queryFactory
                 .selectFrom(reply)
                 .where(reply.bno.eq(board))

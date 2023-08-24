@@ -20,4 +20,9 @@ public class ReplyDto {
     @ApiModelProperty(position = 3, value = "작성자 회원 번호", example = "1")
     private Long writerSno;
 
+    public ReplyDto(Long rno, String content) {
+        this.rno = rno;
+        this.content = content;
+    }
+
 }

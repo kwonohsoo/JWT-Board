@@ -29,7 +29,9 @@ public class Reply extends BaseTimeEntity {
     @Comment("작성자 회원 번호")
     private Member member;
 
+    @Getter
     @Column(length = 1000)
     @Comment("댓글 내용")
     private String content;
+
 }

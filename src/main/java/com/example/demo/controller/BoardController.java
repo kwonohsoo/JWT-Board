@@ -53,7 +53,7 @@ public class BoardController {
     }
 
     // 게시글 상세 조회
-    @GetMapping("/{bno}")
+    @GetMapping("/page/read/{bno}")
     @ApiOperation(value = "게시글 상세 조회 API", notes = "게시글 상세 조회")
     public ResponseEntity<BoardDto> findBoardByBno(@PathVariable Long bno) {
         try {

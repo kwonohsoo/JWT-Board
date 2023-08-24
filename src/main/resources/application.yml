@@ -37,10 +37,10 @@ jwt:
   secretKey: Authorization
   headerAccessToken: AccessToken
   headerRefreshToken: RefreshToken
-#  accessTokenValidMillisecond: 3600000 # 1시간
-#  refreshTokenValidMillisecond: 86400000 # 24시간
-  accessTokenValidMillisecond: 30000 # 30초
-  refreshTokenValidMillisecond: 60000 # 1분
+  accessTokenValidMillisecond: 3600000 # 1시간
+  refreshTokenValidMillisecond: 86400000 # 24시간
+#  accessTokenValidMillisecond: 30000 # 30초
+#  refreshTokenValidMillisecond: 60000 # 1분
 
 
 logging:

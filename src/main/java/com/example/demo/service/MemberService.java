@@ -41,6 +41,8 @@ public class MemberService {
         signUpDto.setRole(Role.USER);
         signUpDto.setUseYn(signUpDto.getUseYn());
 
+        Member member = memberRepository.save(signUpDto.toEntity());
+
         return signUpDto;
     }
 
