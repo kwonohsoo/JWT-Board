@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import com.example.demo.dto.ReplyDto;
 import com.example.demo.entity.Board;
 import com.example.demo.entity.QReply;
 import com.example.demo.entity.Reply;
@@ -11,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+import static com.example.demo.entity.QReply.reply;
+
 @RequiredArgsConstructor
 @Repository
 @Transactional(readOnly = true)
@@ -18,6 +21,15 @@ public class ReplyQueryRepository {
 
     private final EntityManager em;
     private final JPAQueryFactory queryFactory;
+
+    // 댓글 작성
+    @Transactional
+    public ReplyDto saveReply(ReplyDto replyDto) {
+        Reply reply = Reply.builder()
+                        .content(replyDto.getContent()).build();
+        em.persist(reply);
+        return replyDto;
+    }
 
     // 댓글 목록 조회
     public List<Reply> findRepliesByBoard(Board board) {
@@ -29,26 +41,24 @@ public class ReplyQueryRepository {
                 .fetch();
     }
 
-    // 댓글 작성
-    @Transactional
-    public Long saveReply(Reply reply) {
-        em.persist(reply);
-        return reply.getRno();
-    }
-
     // 댓글 수정
     @Transactional
-    public void updateReply(Reply updatedReply) {
-        em.merge(updatedReply);
+    public void updateReply(Long rno, ReplyDto replyDto) {
+        QReply qReply = QReply.reply;
+        queryFactory
+                .update(qReply)
+                .set(qReply.content, replyDto.getContent())
+                .where(qReply.rno.eq(rno))
+                .execute();
     }
 
     // 댓글 삭제
     @Transactional
-    public void deleteReply(Long replyId) {
+    public void deleteReply(Long rno) {
         QReply reply = QReply.reply;
         queryFactory
                 .delete(reply)
-                .where(reply.rno.eq(replyId))
+                .where(reply.rno.eq(rno))
                 .execute();
     }
 }
