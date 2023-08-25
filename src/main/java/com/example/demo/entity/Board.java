@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-//@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
@@ -38,7 +37,7 @@ public class Board extends BaseTimeEntity {
     @Comment("조회수")
     private int views;
 
-    @OneToMany(mappedBy = "bno", cascade = CascadeType.REMOVE) // 부모 객체 삭제시 연관 자식 객체 함께 삭제 (게시판 - 댓글)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE) // 부모 객체 삭제시 연관 자식 객체 함께 삭제 (게시판 - 댓글)
     private List<Reply> replies = new ArrayList<>();
 
 }

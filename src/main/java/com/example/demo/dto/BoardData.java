@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 public class BoardData {
+
     private long bno;
     private String title;
     private String content;

@@ -2,10 +2,7 @@ package com.example.demo.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 
@@ -19,6 +16,7 @@ public class BoardDto {
     @ApiModelProperty(position = 1, value = "게시글 번호", example = "1")
     private Long bno;
 
+    @Getter
     @ApiModelProperty(position = 2, value = "작성자 회원 번호", example = "1")
     private Long writerSno;
 
@@ -34,7 +32,6 @@ public class BoardDto {
     private int views;
 
     public BoardDto(Long bno, String title, String content) {
-
         this.bno = bno;
         this.title = title;
         this.content = content;
@@ -47,5 +44,4 @@ public class BoardDto {
     public void setContent(String content) {
         this.content = content;
     }
-
 }

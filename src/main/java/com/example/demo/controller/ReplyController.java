@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.ReplyDto;
+import com.example.demo.dto.ReplyRequestDto;
 import com.example.demo.entity.Board;
 import com.example.demo.entity.Reply;
 import com.example.demo.repository.BoardRepository;
@@ -28,9 +28,9 @@ public class ReplyController {
     // 댓글 작성
     @PostMapping("/create")
     @ApiOperation(value = "댓글 작성 API", notes = "새로운 댓글 작성")
-    public ResponseEntity<?> saveReply(@RequestBody ReplyDto replyDto) {
+    public ResponseEntity<?> saveReply(@RequestBody ReplyRequestDto replyRequestDto) {
         try {
-            ReplyDto savedReply = replyService.saveReply(replyDto);
+            Long savedReply = replyService.saveReply(replyRequestDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(savedReply);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("댓글 작성에 실패하였습니다.");
@@ -46,20 +46,31 @@ public class ReplyController {
             return ResponseEntity.notFound().build();
         }
         List<Reply> replies = replyService.findRepliesByBoard(board);
+        log.info(replies.toString());
         return ResponseEntity.ok(replies);
     }
 
     // 댓글 수정
     @PutMapping("/update/{rno}")
     @ApiOperation(value = "댓글 수정 API", notes = "댓글 수정")
-    public ResponseEntity<String> updateReply(@PathVariable Long rno, @RequestBody ReplyDto replyDto) {
+    public ResponseEntity<String> updateReply(@PathVariable Long rno, @RequestBody ReplyRequestDto replyRequestDto) {
         try {
-            replyService.updateReply(rno, replyDto);
+            replyService.updateReply(rno, replyRequestDto);
             return ResponseEntity.ok("댓글이 성공적으로 수정되었습니다. ");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("댓글 수정 중 요류가 발생하였습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("댓글 수정 중 오류가 발생하였습니다.");
         }
     }
 
-
+    // 댓글 삭제
+    @DeleteMapping("/delete/{rno}")
+    @ApiOperation(value = "댓글 삭제 API", notes = "댓글 삭제")
+    public ResponseEntity<String> deleteReply(@PathVariable Long rno) {
+        try {
+            replyService.deleteReply(rno);
+            return ResponseEntity.ok("댓글이 성공적으로 삭제되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("댓글 삭제 중 오류가 발생하였습니다.");
+        }
+    }
 }

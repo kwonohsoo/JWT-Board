@@ -98,4 +98,13 @@ public class BoardController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 삭제 중 오류가 발생하였습니다.");
         }
     }
+
+    // 조회수 증가
+    @PutMapping("/page/read/{bno}")
+    @ApiOperation(value = "조회수 증가 API", notes = "조회수 증가")
+    public ResponseEntity<String> increaseViewCount(@PathVariable Long bno) {
+        long updatedViewCount = boardService.increaseViewCount(bno);
+        return ResponseEntity.ok("조회수 : " + updatedViewCount);
+    }
+
 }

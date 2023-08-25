@@ -19,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardService {
 
+
     private final BoardQueryRepository boardQueryRepository;
 
     // 게시글 저장
@@ -55,6 +56,7 @@ public class BoardService {
             boardDto.setBno(board.getBno());
             boardDto.setTitle(board.getTitle());
             boardDto.setContent(board.getContent());
+            boardDto.setWriterSno(board.getMember().getSno());
             return boardDto;
         } else {
             return null;
@@ -81,5 +83,11 @@ public class BoardService {
     @Transactional
     public void deleteBoard(Long bno) {
         boardQueryRepository.deleteBoard(bno);
+    }
+
+    // 조회수 증가
+    @Transactional
+    public long increaseViewCount(Long bno) {
+        return boardQueryRepository.updateViewCount(bno);
     }
 }
