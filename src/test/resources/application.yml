@@ -1,0 +1,46 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://127.0.0.1:3306/authbbs?characterEncoding=UTF-8&&serverTimeZone=UTC
+    username: root
+    password: 1111
+
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    properties:
+#      hibernate:
+#        show_sql: true
+#        format_sql: true
+#        use_sql_comments: true
+#        connection:
+#          charSet: UTF-8
+#    database-platform: org.hibernate.dialect.MariaDB10Dialect
+#
+#  jackson:
+#    property-naming-strategy: SNAKE_CASE
+#
+#
+#  redis:
+#    host: localhost
+#    port: 6379
+#
+#
+#  mvc:
+#    pathmatch:
+#      matching-strategy: ant_path_matcher
+#
+#jwt:
+#  secretKey: Authorization
+#  headerAccessToken: AccessToken
+#  headerRefreshToken: RefreshToken
+#  accessTokenValidMillisecond: 3600000 # 1시간
+#  refreshTokenValidMillisecond: 86400000 # 24시간
+##  accessTokenValidMillisecond: 30000 # 30초
+##  refreshTokenValidMillisecond: 60000 # 1분
+#
+#
+#logging:
+#  level:
+#    sql: debug
+#    type: trace

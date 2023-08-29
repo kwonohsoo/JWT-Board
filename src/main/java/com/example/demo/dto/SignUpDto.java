@@ -9,7 +9,7 @@ import lombok.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Data
 @Builder
 @AllArgsConstructor
@@ -44,6 +44,10 @@ public class SignUpDto {
 
     @ApiModelProperty(position = 8, value = "사용여부", example = "사용: 0, 삭제: 9")
     private int useYn;
+
+    public SignUpDto() {
+
+    }
 
     @Builder
     public Member toEntity() {

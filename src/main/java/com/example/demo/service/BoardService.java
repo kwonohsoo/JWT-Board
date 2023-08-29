@@ -75,6 +75,7 @@ public class BoardService {
     }
 
     // 게시글 수정
+    @Transactional
     public void updateBoard(Long bno, BoardDto updatedBoard) {
         boardQueryRepository.updateBoard(bno, updatedBoard);
     }

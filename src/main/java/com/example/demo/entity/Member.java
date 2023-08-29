@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 @Entity
@@ -69,5 +69,9 @@ public class Member extends BaseTimeEntity {
                 ", boardList=" + boardList +
                 ", replyList=" + replyList +
                 '}';
+    }
+
+    public Member() {
+
     }
 }
