@@ -113,26 +113,26 @@ class MemberControllerTest {
     @Test
     @DisplayName("토큰 갱신")
     void 토큰_갱신() throws Exception {
-        // given
+        // given 변수 초기화
         String refreshToken = "refreshToken";
         String newAccessToken = "newAccessToken";
 
         Member member = new Member();
-        member.setEmail("test@naver.com");
+        member.setEmail("test@naver.com"); // 객체에 이메일 설정
 
-        // when
-        when(jwtProvider.validateToken(refreshToken, true)).thenReturn(true);
+        // when 실제 테스트 진행
+        when(jwtProvider.validateToken(refreshToken, true)).thenReturn(true); // 메서드 호출될 때마다 true 반환
         when(jwtProvider.getEmail(refreshToken)).thenReturn("test@naver.com");
         when(memberRepository.findByEmail(anyString())).thenReturn(Optional.of(member));
-        when(jwtProvider.accessToken(member)).thenReturn(newAccessToken);
+        when(jwtProvider.accessToken(member)).thenReturn(newAccessToken); // 메서드 호출될 때 새로운 토큰 반환
 
-        // then
+        // then 예상 결과 검증
         mockMvc.perform(MockMvcRequestBuilders.post("/api/refresh")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"refreshToken\": \"" + refreshToken + "\"}"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.status().isOk()) // 200 맞는지 확인
                 .andExpect(MockMvcResultMatchers.jsonPath("$.accessToken").value(newAccessToken))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.refreshToken").value(refreshToken));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.refreshToken").value(refreshToken)); // 값 검증
 
         verify(jwtProvider, times(1)).validateToken(refreshToken, true);
         verify(jwtProvider, times(1)).getEmail(refreshToken);
