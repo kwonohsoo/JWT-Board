@@ -21,21 +21,21 @@ spring:
 #    property-naming-strategy: SNAKE_CASE
 #
 #
-#  redis:
-#    host: localhost
-#    port: 6379
+  redis:
+    host: localhost
+    port: 6379
+
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 #
-#
-#  mvc:
-#    pathmatch:
-#      matching-strategy: ant_path_matcher
-#
-#jwt:
-#  secretKey: Authorization
-#  headerAccessToken: AccessToken
-#  headerRefreshToken: RefreshToken
-#  accessTokenValidMillisecond: 3600000 # 1시간
-#  refreshTokenValidMillisecond: 86400000 # 24시간
+jwt:
+  secretKey: Authorization
+  headerAccessToken: AccessToken
+  headerRefreshToken: RefreshToken
+  accessTokenValidMillisecond: 3600000 # 1시간
+  refreshTokenValidMillisecond: 86400000 # 24시간
 ##  accessTokenValidMillisecond: 30000 # 30초
 ##  refreshTokenValidMillisecond: 60000 # 1분
 #

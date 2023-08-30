@@ -1,25 +1,23 @@
 package com.example.demo;
 
 import com.example.demo.config.RedisConnectionChecker;
-import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.annotation.PostConstruct;
-
 @SpringBootTest
-@RequiredArgsConstructor
 class DemoApplicationTests {
 
-	private final RedisConnectionChecker redisConnectionChecker;
+	@Autowired
+	private RedisConnectionChecker redisConnectionChecker;
 
-	@Test
-	void contextLoads() {
-	}
-
-	@PostConstruct
+	@BeforeEach
 	public void checkRedisOnStartUpTest() {
 		redisConnectionChecker.checkRedisConnection();
 	}
 
+	@Test
+	void contextLoads() {
+	}
 }

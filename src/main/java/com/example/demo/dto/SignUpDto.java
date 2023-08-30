@@ -49,7 +49,7 @@ public class SignUpDto {
 
     }
 
-    @Builder
+
     public Member toEntity() {
         return Member.builder()
                 .email(email)

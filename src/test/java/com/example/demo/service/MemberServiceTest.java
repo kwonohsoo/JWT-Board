@@ -68,7 +68,7 @@ class MemberServiceTest {
 
     @Test
     @DisplayName("회원 가입")
-    void 회원가입() throws Exception {
+    void 회원_가입() throws Exception {
         // given
         // setUp()
 
@@ -89,7 +89,7 @@ class MemberServiceTest {
     }
 
     @Test
-    @ DisplayName("로그인")
+    @DisplayName("로그인")
     void 로그인() {
         // given
         String email = signUpDto.getEmail();
@@ -112,107 +112,3 @@ class MemberServiceTest {
         );
     }
 }
-
-
-/* BEFORE */
-
-//package com.example.demo.service;
-//
-//import com.example.demo.dto.LoginDto;
-//import com.example.demo.dto.SignUpDto;
-//import com.example.demo.dto.TokenDto;
-//import com.example.demo.entity.Member;
-//import com.example.demo.entity.Role;
-//import com.example.demo.jwt.JwtProvider;
-//import com.example.demo.repository.MemberRepository;
-//import org.junit.jupiter.api.Test;
-//import org.junit.jupiter.api.extension.ExtendWith;
-//import org.mockito.InjectMocks;
-//import org.mockito.Mock;
-//import org.mockito.junit.jupiter.MockitoExtension;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//
-//import java.util.Optional;
-//
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertNotNull;
-//import static org.mockito.Mockito.*;
-//
-//@ExtendWith(MockitoExtension.class)
-//class MemberServiceTest {
-//
-//    @InjectMocks
-//    private MemberService memberService;
-//
-//    @Mock
-//    private MemberRepository memberRepository;
-//
-//    @Mock
-//    private BCryptPasswordEncoder passwordEncoder;
-//
-//    @Mock
-//    private JwtProvider jwtProvider;
-//
-//    @Test
-//    void 회원가입() throws Exception {
-//
-//        // given
-//        SignUpDto signUpDto = new SignUpDto();
-//        signUpDto.setSno(1L);
-//        signUpDto.setEmail("test11@naver.com");
-//        signUpDto.setPassword("testPassword");
-//        signUpDto.setCheckedPassword("testPassword");
-//        signUpDto.setName("test");
-//        signUpDto.setAge(25);
-//        signUpDto.setRole(Role.USER);
-//        signUpDto.setUseYn(0);
-//
-//
-//        // then
-//        SignUpDto result = memberService.signUp(signUpDto);
-//
-//        verify(memberRepository, times(1)).save(any(Member.class)); // 메서드 호출 검증
-//
-//        assertEquals("test11@naver.com", result.getEmail());
-//        assertEquals("test", result.getName());
-//        assertEquals(Role.USER, result.getRole());
-//        assertEquals(25, result.getAge());
-//        assertEquals(0, result.getUseYn());
-//
-//        System.out.println("result = " + result);
-//    }
-//
-//
-//    @Test
-//    void 로그인() {
-//
-//        // given
-//        String email = "test11@naver.com";
-//        String password = "testPassword";
-//
-//        Member mockMember = new Member();
-//        mockMember.setSno(3L);
-//        mockMember.setEmail(email);
-//        mockMember.setPassword(password);
-//        mockMember.setPassword(passwordEncoder.encode(password));
-//
-//        // when
-//        when(memberRepository.findByEmail(email)).thenReturn(Optional.of(mockMember));
-//        when(jwtProvider.accessToken(any(Member.class))).thenReturn("mockAccessToken");
-//        when(jwtProvider.refreshToken(any(Member.class))).thenReturn("mockRefreshToken");
-//        when(passwordEncoder.matches(password, mockMember.getPassword())).thenReturn(true);
-//
-//        // then
-//        LoginDto loginDto = new LoginDto(email, password);
-//        TokenDto tokenDto = memberService.login(loginDto);
-//
-//        verify(memberRepository, times(1)).findByEmail(email);
-//
-//        assertNotNull(tokenDto);
-//        assertEquals("mockAccessToken", tokenDto.getAccessToken());
-//        assertEquals("mockRefreshToken", tokenDto.getRefreshToken());
-//
-//        System.out.println("loginDto = " + loginDto);
-//        System.out.println("tokenDto = " + tokenDto);
-//    }
-//}

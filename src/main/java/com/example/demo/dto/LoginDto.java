@@ -6,7 +6,7 @@ import lombok.*;
 
 import javax.validation.constraints.Email;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Data
 @Builder
 @AllArgsConstructor
@@ -19,4 +19,8 @@ public class LoginDto {
 
     @ApiModelProperty(position = 2, required = true, value = "비밀번호", example = "testPassword")
     private String password;
+
+    public LoginDto() {
+
+    }
 }

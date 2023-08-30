@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Data
 @Builder
 @AllArgsConstructor
@@ -16,4 +16,8 @@ public class TokenDto {
 
     @ApiModelProperty(position = 2, required = true, value = "RefreshToken 정보", example = "Encoded RefreshToken")
     private String refreshToken;
+
+    public TokenDto() {
+
+    }
 }
