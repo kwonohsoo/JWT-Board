@@ -16,7 +16,6 @@ public class DemoApplication {
 	private final RedisConnectionChecker redisConnectionChecker;
 
 	public static void main(String[] args) {
-		int a = 3;
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
