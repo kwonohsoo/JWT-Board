@@ -40,7 +40,6 @@ public class Board extends BaseTimeEntity {
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE) // 부모 객체 삭제시 연관 자식 객체 함께 삭제 (게시판 - 댓글)
     private List<Reply> replies = new ArrayList<>();
 
-    @Builder
     public Board(Member member, String title, String content, int views, List<Reply> replies) {
         this.member = member;
         this.title = title;

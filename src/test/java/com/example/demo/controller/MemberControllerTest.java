@@ -32,7 +32,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 //@SpringBootTest
-@DisplayName("멤버_컨트롤러_테스트")
+@DisplayName("Member Controller TEST")
 class MemberControllerTest {
 
     private MockMvc mockMvc;

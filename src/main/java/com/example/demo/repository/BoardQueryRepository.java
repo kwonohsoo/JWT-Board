@@ -2,6 +2,7 @@ package com.example.demo.repository;
 
 import com.example.demo.dto.BoardDto;
 import com.example.demo.entity.Board;
+import com.example.demo.entity.Member;
 import com.example.demo.entity.QBoard;
 import com.example.demo.entity.QReply;
 import com.querydsl.core.BooleanBuilder;
@@ -30,12 +31,14 @@ public class BoardQueryRepository {
     // 게시글 작성
     @Transactional
     public BoardDto saveBoard(BoardDto boardDto) {
+        Member author = memberRepository.findById(boardDto.getWriterSno())
+                .orElseThrow(() -> new IllegalArgumentException("작성자가 존재하지 않습니다."));
 
         Board board = Board.builder()
                 .title(boardDto.getTitle())
                 .content(boardDto.getContent())
                 .views(boardDto.getViews())
-                .member(memberRepository.findById(boardDto.getWriterSno()).orElse(null))
+                .member(author)
                 .build();
 
         boardRepository.save(board);

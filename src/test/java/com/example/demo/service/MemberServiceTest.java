@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 
 //@SpringBootTest // 모든 빈을 IoC에 등록하기 때문에 속도 느림, 전체 테스트 할 때 사용 (ex. 전역에 redis 설정을 안해서 오류남 but @ExtendWith(MockitoExtension.class)은 필요한 객체만 설정해서 redis 오류 안남)
 @ExtendWith(MockitoExtension.class) // 필요한 서비스 객체만 생성 -> IoC 등록을 하지 않아 속도 빠름
-@DisplayName("멤버_서비스_테스트")
+@DisplayName("Member Service TEST")
 class MemberServiceTest {
 
     @InjectMocks
