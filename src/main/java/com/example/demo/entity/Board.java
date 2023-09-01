@@ -47,4 +47,17 @@ public class Board extends BaseTimeEntity {
         this.views = views;
         this.replies = replies;
     }
+
+    public Board(String title) {
+        super();
+    }
+
+    public void setTitle(String updatedTitle) {
+        this.title = updatedTitle;
+    }
+
+    public void setContent(String updatedContent) {
+        this.content = updatedContent;
+    }
 }
+

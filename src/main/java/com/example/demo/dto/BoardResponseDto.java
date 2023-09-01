@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -24,19 +25,21 @@ public class BoardResponseDto {
     @ApiModelProperty(position = 4, value = "페이지 사이즈")
     private int pageSize;
 
-    @ApiModelProperty(position = 5, value = "board리스트")
-    List<BoardData> boardDataList;
+    @ApiModelProperty(position = 5, value = "board 리스트")
+    private List<BoardData> boardDataList = new ArrayList<>();
 
     public void mySetBoardDataList(List<Board> boardList) {
-        boardList.forEach(board -> this.boardDataList.add(
-                BoardData.builder()
-                        .bno(board.getBno())
-                        .title(board.getTitle())
-                        .content(board.getContent())
-                        .views(board.getViews())
-                        .writerName(board.getMember().getName())
-                        .createDt(board.getCreateDate())
-                        .updateDt(board.getModifiedDate())
-                        .build()));
+        for (Board board : boardList) {
+            this.boardDataList.add(
+                    BoardData.builder()
+                            .bno(board.getBno())
+                            .title(board.getTitle())
+                            .content(board.getContent())
+                            .views(board.getViews())
+//                            .writerName(board.getMember().getName())
+                            .createDt(board.getCreateDate())
+                            .updateDt(board.getModifiedDate())
+                            .build());
+        }
     }
 }

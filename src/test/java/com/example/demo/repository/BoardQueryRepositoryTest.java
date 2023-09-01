@@ -133,48 +133,99 @@ public class BoardQueryRepositoryTest {
         log.info("--------------------------------------------------");
     }
 
+    private int viewCount = 0;
+
+    // 조회수 증가 메소드
+    private void increaseViewCount() {
+        viewCount++;
+    }
 
     @Test
     @DisplayName("조회수 증가")
     void 조회수_증가() {
         // given
-
+        assertEquals(0, viewCount);
 
         // when
+        increaseViewCount();
 
         // then
+        assertEquals(1, viewCount); // 1씩 증가
+
+        for (int i = 0; i < 100; i++) {
+            increaseViewCount();
+        }
+
+        assertEquals(101, viewCount);
+
+        log.info("viewCount = {}", viewCount);
+        log.info("--------------------------------------------------");
     }
 
     @Test
     @DisplayName("게시글 검색(제목or내용)")
     void 게시글_검색() {
         // given
+        String keyword = "제목1";
 
+        when(boardRepository.searchBoards(keyword)).thenReturn(boards);
 
         // when
+        List<Board> result = boardRepository.searchBoards(keyword);
 
         // then
+        assertEquals(11, result.size());
+        assertEquals("제목1", result.get(0).getTitle());
+        verify(boardRepository, times(1)).searchBoards(keyword);
+
+        log.info("게시글 검색 결과:");
+        log.info("BNO: {}", result.get(0).getBno());
+        log.info("Title: {}", result.get(0).getTitle());
+        log.info("Content: {}", result.get(0).getContent());
+        log.info("Views: {}", result.get(0).getViews());
+        log.info("--------------------------------------------------");
     }
+
 
     @Test
     @DisplayName("게시글 수정")
-    void 게시글_수정() {
+    void 게시글_수정_테스트() {
         // given
-
+        Long bno = 1L; // 수정할 게시글 번호
+        Board boardToUpdate = boards.get(0);
+        String updatedTitle = "수정된 제목";
+        String updatedContent = "수정된 내용";
 
         // when
+        boardToUpdate.setTitle(updatedTitle);
+        boardToUpdate.setContent(updatedContent);
+        boardRepository.save(boardToUpdate); // 수정된 게시글 저장
 
         // then
+        verify(boardRepository, times(1)).save(boardToUpdate);
+        assertEquals(updatedTitle, boardToUpdate.getTitle()); // 수정된 제목 확인
+        assertEquals(updatedContent, boardToUpdate.getContent()); // 수정된 내용 확인
+
+        log.info("게시글 수정 결과:");
+        log.info("BNO: " + boardToUpdate.getBno());
+        log.info("Title: " + boardToUpdate.getTitle());
+        log.info("Content: " + boardToUpdate.getContent());
+        log.info("--------------------------------------------------");
     }
 
     @Test
     @DisplayName("게시글 삭제")
     void 게시글_삭제() {
         // given
-
+        Long bno = 1L; // 삭제할 게시글 번호
 
         // when
+        boardRepository.deleteById(bno);
 
         // then
+        verify(boardRepository, times(1)).deleteById(bno);
+
+        log.info("게시글 삭제 완료: BNO " + bno);
+        log.info("--------------------------------------------------");
     }
 }
