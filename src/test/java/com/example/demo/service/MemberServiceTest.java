@@ -68,7 +68,7 @@ class MemberServiceTest {
 
     @Test
     @DisplayName("회원 가입")
-    void 회원_가입() throws Exception {
+    void join() throws Exception {
         // given
         // setUp()
 
@@ -90,7 +90,7 @@ class MemberServiceTest {
 
     @Test
     @DisplayName("로그인")
-    void 로그인() {
+    void login() {
         // given
         String email = signUpDto.getEmail();
         String password = signUpDto.getPassword();

@@ -59,7 +59,8 @@ class BoardServiceTest {
     }
 
     @Test
-    void 게시글등록() {
+    @DisplayName("게시글 등록")
+    void savaBoard() {
         // given
         Long bno = 1L;
         BoardDto boardToCreate = new BoardDto();
@@ -90,8 +91,8 @@ class BoardServiceTest {
     }
 
     @Test
-    @DisplayName("게시글 목록 조회 페이징")
-    void 게시글_목록_조회_페이징_서비스_테스트() {
+    @DisplayName("게시판 조회 페이징")
+    void getAllPage() {
         // given
         Pageable pageable = PageRequest.of(0, 5); // Page 0, Page size 5
         Page<Board> boardPage = new PageImpl<>(boards, pageable, boards.size());
@@ -114,7 +115,7 @@ class BoardServiceTest {
 
     @Test
     @DisplayName("게시글 상세 조회")
-    void 게시글_상세_조회() {
+    void findBoardByBno() {
         // given
         Long bno = 1L;
         Board board = boards.get(0);
@@ -135,7 +136,7 @@ class BoardServiceTest {
     @Test
     @DisplayName("조회수 증가")
     @Transactional
-    void 조회수_증가() {
+    void updateViewCount() {
         // given
         Long bno = 1L;
 
@@ -155,7 +156,7 @@ class BoardServiceTest {
 
     @Test
     @DisplayName("게시글 수정")
-    void 게시글_수정() {
+    void updateBoard() {
         // given
         Long bno = 1L;
         BoardDto boardToUpdate = new BoardDto();
@@ -179,7 +180,7 @@ class BoardServiceTest {
 
     @Test
     @DisplayName("게시글 삭제")
-    void 게시글_삭제() {
+    void deleteBoard() {
         // given
         Long bno = 1L;
 

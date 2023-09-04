@@ -25,7 +25,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-//@SpringBootTest
 @DisplayName("Board Repository TEST")
 @Slf4j
 public class BoardQueryRepositoryTest {
@@ -43,8 +42,10 @@ public class BoardQueryRepositoryTest {
 
     @BeforeEach
     void setUp() {
+        Member member = new Member();
+
         boards = new ArrayList<>();
-        boards.add(Board.builder().bno(1L).title("제목1").content("내용1").build()); // 테스트용 게시글 추가
+        boards.add(Board.builder().bno(1L).title("제목1").content("내용1").member(member).build());
         boards.add(Board.builder().bno(2L).title("제목2").content("내용2").build());
         boards.add(Board.builder().bno(3L).title("제목3").content("내용3").build());
         boards.add(Board.builder().bno(4L).title("제목4").content("내용4").build());
@@ -55,12 +56,11 @@ public class BoardQueryRepositoryTest {
         boards.add(Board.builder().bno(9L).title("제목9").content("내용9").build());
         boards.add(Board.builder().bno(10L).title("제목10").content("내용10").build());
         boards.add(Board.builder().bno(11L).title("제목11").content("내용11").build());
-
     }
 
     @Test
     @DisplayName("게시글 등록")
-    void 게시글_등록() {
+    void savaBoard() {
         // given
         String title = "제목1";
         String content = "내용1";
@@ -88,7 +88,7 @@ public class BoardQueryRepositoryTest {
 
     @Test
     @DisplayName("게시판 목록 조회 페이징")
-    void 게시판_목록_조회_페이징() {
+    void getAllPage() {
         // given
         Pageable pageable = Pageable.ofSize(5); // 페이징 정보를 생성 size: 5
         Page<Board> boardPage = new PageImpl<>(boards, pageable, boards.size()); // Page 객체 생성
@@ -107,7 +107,7 @@ public class BoardQueryRepositoryTest {
 
     @Test
     @DisplayName("게시글 상세 조회")
-    void 게시글_상세_조회() {
+    void findBoardByBno() {
         // given
         Long bno = 1L; // 게시글 번호
         Board board = boards.get(0);
@@ -142,7 +142,7 @@ public class BoardQueryRepositoryTest {
 
     @Test
     @DisplayName("조회수 증가")
-    void 조회수_증가() {
+    void updateViewCount() {
         // given
         assertEquals(0, viewCount);
 
@@ -164,19 +164,19 @@ public class BoardQueryRepositoryTest {
 
     @Test
     @DisplayName("게시글 검색(제목or내용)")
-    void 게시글_검색() {
+    void searchBoard() {
         // given
         String keyword = "제목1";
 
-        when(boardRepository.searchBoards(keyword)).thenReturn(boards);
+        when(boardQueryRepository.searchBoards(keyword)).thenReturn(boards);
 
         // when
-        List<Board> result = boardRepository.searchBoards(keyword);
+        List<Board> result = boardQueryRepository.searchBoards(keyword);
 
         // then
         assertEquals(11, result.size());
         assertEquals("제목1", result.get(0).getTitle());
-        verify(boardRepository, times(1)).searchBoards(keyword);
+        verify(boardQueryRepository, times(1)).searchBoards(keyword);
 
         log.info("게시글 검색 결과:");
         log.info("BNO: {}", result.get(0).getBno());
@@ -188,9 +188,8 @@ public class BoardQueryRepositoryTest {
 
     @Test
     @DisplayName("게시글 수정")
-    void 게시글_수정_테스트() {
+    void updateBoard() {
         // given
-        Long bno = 1L; // 수정할 게시글 번호
         Board boardToUpdate = boards.get(0);
         String updatedTitle = "수정된 제목";
         String updatedContent = "수정된 내용";
@@ -214,7 +213,7 @@ public class BoardQueryRepositoryTest {
 
     @Test
     @DisplayName("게시글 삭제")
-    void 게시글_삭제() {
+    void deleteBoard() {
         // given
         Long bno = 1L; // 삭제할 게시글 번호
 

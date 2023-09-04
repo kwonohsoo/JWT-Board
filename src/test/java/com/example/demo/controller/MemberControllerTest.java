@@ -56,7 +56,7 @@ class MemberControllerTest {
 
     @Test
     @DisplayName("회원 가입")
-    void 회원_가입() throws Exception {
+    void join() throws Exception {
         // given
         SignUpDto signUpDto = SignUpDto.builder()
                 .email("test@naver.com")
@@ -77,7 +77,7 @@ class MemberControllerTest {
 
     @Test
     @DisplayName("로그인")
-    void 로그인() {
+    void login() {
         // given
         LoginDto loginDto = new LoginDto();
         loginDto.setEmail("test@naver.com");
@@ -95,7 +95,7 @@ class MemberControllerTest {
     }
 
     @Test
-    void 토큰_생성() {
+    void accessToken() {
         // Given
         Member member = new Member();
         member.setEmail("test@naver.com");
@@ -112,7 +112,7 @@ class MemberControllerTest {
 
     @Test
     @DisplayName("토큰 갱신")
-    void 토큰_갱신() throws Exception {
+    void refreshToken() throws Exception {
         // given 변수 초기화
         String refreshToken = "refreshToken";
         String newAccessToken = "newAccessToken";
