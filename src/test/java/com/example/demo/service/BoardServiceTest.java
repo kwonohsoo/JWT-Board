@@ -6,8 +6,6 @@ import com.example.demo.dto.BoardResponseDto;
 import com.example.demo.entity.Board;
 import com.example.demo.entity.Member;
 import com.example.demo.repository.BoardQueryRepository;
-import com.example.demo.repository.BoardRepository;
-import com.example.demo.repository.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,24 +23,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @Slf4j
 @ExtendWith(MockitoExtension.class)
 @Import(QueryDslTestConfig.class)
+@DisplayName("Board Service TEST")
 class BoardServiceTest {
     @InjectMocks
     private BoardService boardService;
-
-    @Mock
-    private BoardRepository boardRepository;
-
-    @Mock
-    private MemberRepository memberRepository;
 
     @Mock
     private BoardQueryRepository boardQueryRepository;
@@ -52,7 +43,9 @@ class BoardServiceTest {
     @BeforeEach
     void setUp() {
         boards = new ArrayList<>();
-        boards.add(Board.builder().bno(1L).title("제목1").content("내용1").build()); // 테스트용 게시글 추가
+        Member member = new Member();
+
+        boards.add(Board.builder().bno(1L).title("제목1").content("내용1").member(member).build()); // 테스트용 게시글 추가
         boards.add(Board.builder().bno(2L).title("제목2").content("내용2").build());
         boards.add(Board.builder().bno(3L).title("제목3").content("내용3").build());
         boards.add(Board.builder().bno(4L).title("제목4").content("내용4").build());
@@ -66,38 +59,34 @@ class BoardServiceTest {
     }
 
     @Test
-    @DisplayName("게시글 등록")
-    void 게시글_등록() {
-        // Given
-        Member testMember = new Member();
-        testMember.setSno(1L);
+    void 게시글등록() {
+        // given
+        Long bno = 1L;
+        BoardDto boardToCreate = new BoardDto();
 
-        when(memberRepository.findById(1L)).thenReturn(Optional.of(testMember));
+        boardToCreate.setBno(bno);
+        boardToCreate.setWriterSno(1L);
+        boardToCreate.setTitle("제목");
+        boardToCreate.setContent("내용");
 
         BoardDto boardDto = BoardDto.builder()
-                .bno(1L)
-                .title("테스트 제목")
-                .content("테스트 내용")
-                .views(0)
-                .writerSno(1L)
-                .build();
+                .bno(bno)
+                .title(boardToCreate.getTitle())
+                .content(boardToCreate.getContent())
+                .writerSno(boardToCreate.getWriterSno()).build();
 
-        Board savedBoard = Board.builder()
-                .title(boardDto.getTitle())
-                .content(boardDto.getContent())
-                .views(boardDto.getViews())
-                .member(testMember)
-                .build();
-        when(boardRepository.save(any(Board.class))).thenReturn(savedBoard);
+        // when
+        boardService.saveBoard(boardToCreate);
 
-        // When
-        BoardDto savedBoardDto = boardService.saveBoard(boardDto);
+        // then
+        verify(boardQueryRepository, times(1)).saveBoard(boardToCreate);
 
-        // Then
-        assertEquals(boardDto.getTitle(), savedBoardDto.getTitle());
-        assertEquals(boardDto.getContent(), savedBoardDto.getContent());
-        assertEquals(boardDto.getViews(), savedBoardDto.getViews());
-        assertEquals(boardDto.getWriterSno(), savedBoardDto.getWriterSno());
+        assertEquals(boardToCreate.getTitle(), boardDto.getTitle());
+        assertEquals(boardToCreate.getContent(), boardDto.getContent());
+        assertEquals(boardToCreate.getWriterSno(), boardDto.getWriterSno());
+
+        log.info(boardToCreate.toString());
+        log.info("--------------------------------------------------");
     }
 
     @Test
@@ -120,6 +109,7 @@ class BoardServiceTest {
 
         log.info(boardPage.toString());
         log.info(boardResponseDto.toString());
+        log.info("--------------------------------------------------");
     }
 
     @Test
@@ -128,13 +118,18 @@ class BoardServiceTest {
         // given
         Long bno = 1L;
         Board board = boards.get(0);
-        when(boardRepository.findById(bno)).thenReturn(Optional.ofNullable(board));
+
+        when(boardQueryRepository.findBoardByBno(bno)).thenReturn(board);
 
         // when
         BoardDto result = boardService.findBoardByBno(bno);
 
         // then
+        verify(boardQueryRepository, times(1)).findBoardByBno(bno);
         assertEquals(bno, result.getBno());
+
+        log.info(result.toString());
+        log.info("--------------------------------------------------");
     }
 
     @Test
@@ -142,15 +137,59 @@ class BoardServiceTest {
     @Transactional
     void 조회수_증가() {
         // given
-        Long bno = 1L; // 증가시킬 게시물 번호
+        Long bno = 1L;
+
+        when(boardQueryRepository.updateViewCount(bno)).thenReturn(1L);
 
         // when
-        long initViewCount = 0;
-        long updatedViewCount = boardService.increaseViewCount(bno); // 조회수 증가 메소드 호출
+        long updatedCount = boardService.increaseViewCount(bno);
 
         // then
-        long expectedViewCount = initViewCount + 1; // 예상 증가된 조회수
+        verify(boardQueryRepository, times(1)).updateViewCount(bno);
 
-        assertEquals(expectedViewCount, updatedViewCount); // 증가된 조회수와 예상 조회수 비교
+        assertEquals(1, updatedCount);
+
+        log.info(String.valueOf(updatedCount));
+        log.info("--------------------------------------------------");
+    }
+
+    @Test
+    @DisplayName("게시글 수정")
+    void 게시글_수정() {
+        // given
+        Long bno = 1L;
+        BoardDto boardToUpdate = new BoardDto();
+
+        String updateTitle = "수정된 제목";
+        String updateContent = "수정된 내용";
+
+        // when
+        boardToUpdate.setBno(bno);
+        boardToUpdate.setTitle(updateTitle);
+        boardToUpdate.setContent(updateContent);
+
+        boardService.updateBoard(bno, boardToUpdate);
+
+        // then
+        verify(boardQueryRepository, times(1)).updateBoard(bno, boardToUpdate);
+
+        log.info(boardToUpdate.toString());
+        log.info("--------------------------------------------------");
+    }
+
+    @Test
+    @DisplayName("게시글 삭제")
+    void 게시글_삭제() {
+        // given
+        Long bno = 1L;
+
+        // when
+        boardService.deleteBoard(bno);
+
+        // then
+        verify(boardQueryRepository, times(1)).deleteBoard(bno);
+
+        log.info(bno.toString());
+        log.info("--------------------------------------------------");
     }
 }

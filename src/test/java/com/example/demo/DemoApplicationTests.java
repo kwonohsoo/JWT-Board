@@ -9,17 +9,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class DemoApplicationTests {
 
-	@Autowired
-	private RedisConnectionChecker redisConnectionChecker;
+    @Autowired
+    private RedisConnectionChecker redisConnectionChecker;
 
-	@BeforeEach
-	public void checkRedisOnStartUpTest() {
-		redisConnectionChecker.checkRedisConnection();
-	}
+    @BeforeEach
+    public void checkRedisOnStartUpTest() {
+        redisConnectionChecker.checkRedisConnection();
+    }
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 }
 //	given(준비): 어떠한 데이터가 준비되었을 때
 

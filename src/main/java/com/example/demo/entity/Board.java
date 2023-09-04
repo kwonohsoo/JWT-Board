@@ -59,5 +59,9 @@ public class Board extends BaseTimeEntity {
     public void setContent(String updatedContent) {
         this.content = updatedContent;
     }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
 }
 

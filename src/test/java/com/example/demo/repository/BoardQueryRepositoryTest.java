@@ -186,7 +186,6 @@ public class BoardQueryRepositoryTest {
         log.info("--------------------------------------------------");
     }
 
-
     @Test
     @DisplayName("게시글 수정")
     void 게시글_수정_테스트() {
