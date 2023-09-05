@@ -109,7 +109,7 @@ public class BoardQueryRepositoryTest {
     @DisplayName("게시글 상세 조회")
     void findBoardByBno() {
         // given
-        Long bno = 1L; // 게시글 번호
+        Long bno = 1L;
         Board board = boards.get(0);
         when(boardRepository.findById(bno)).thenReturn(Optional.of(board));
 

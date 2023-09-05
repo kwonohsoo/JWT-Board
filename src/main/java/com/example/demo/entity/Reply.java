@@ -6,11 +6,11 @@ import org.hibernate.annotations.Comment;
 import javax.persistence.*;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Entity
 @Table(name = "reply")
+@AllArgsConstructor
 public class Reply extends BaseTimeEntity {
 
     @Id
@@ -34,4 +34,13 @@ public class Reply extends BaseTimeEntity {
     @Comment("댓글 내용")
     private String content;
 
+
+
+    public void setRno(Long rno) {
+        this.rno = rno;
+    }
+
+    public void setContent(String updateReply) {
+        this.content = content;
+    }
 }
