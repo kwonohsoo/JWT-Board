@@ -52,6 +52,10 @@ public class Board extends BaseTimeEntity {
         super();
     }
 
+    public void setBno(Long bno) {
+        this.bno = bno;
+    }
+
     public void setTitle(String updatedTitle) {
         this.title = updatedTitle;
     }
