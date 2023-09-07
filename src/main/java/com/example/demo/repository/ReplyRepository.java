@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ReplyRepository extends JpaRepository<Reply, Long> {
 
-    void update(Long rno, ReplyRequestDto replyRequestDto);
+//    void update(Long rno, ReplyRequestDto replyRequestDto);
 }
